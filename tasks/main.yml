@@ -2,7 +2,6 @@
 
 - name: Intall yum packages.
   yum: pkg={{ item }} state=present
-  notify: restart denyhosts
   with_items:
     - denyhosts
 
@@ -10,8 +9,8 @@
     dest: /etc/denyhosts.conf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
-  notify: restart denyhosts
   with_items:
     - regexp: '^ADMIN_EMAIL = .*'
       line: "ADMIN_EMAIL = {{ denyhosts_admin_email }}"
 
+- service: name=denyhosts enabled=yes state=restarted
