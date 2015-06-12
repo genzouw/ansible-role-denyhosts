@@ -10,7 +10,9 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   with_items:
-    - regexp: '^ADMIN_EMAIL = .*'
+    - regexp: '^ADMIN_EMAIL =.*'
       line: "ADMIN_EMAIL = {{ denyhosts_admin_email }}"
+    - regexp: '^BLOCK_SERVICE *=.*'
+      line: "BLOCK_SERVICE = {{ denyhosts_block_service }}"
 
 - service: name=denyhosts enabled=yes state=restarted
